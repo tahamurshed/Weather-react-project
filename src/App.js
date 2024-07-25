@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import { ThemeProvider } from "@emotion/react";
+import { createTheme } from "@mui/material";
+import WeatherCard from "./components/WeatherCard";
+import { ToastProvider } from "./contexts/ToastContext";
+import Loader from "./components/Loader";
+import { LoaderProvider } from "./contexts/LoaderContext";
 function App() {
+  const theme = createTheme({
+    typography: {
+      fontFamily: ["ElMessiri"],
+    },
+    snackbar: {
+      backgroundColor: "#4caf50", // Custom background color
+    },
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <ToastProvider>
+        <div className="App">
+          <LoaderProvider>
+            <WeatherCard />
+            <Loader />
+          </LoaderProvider>
+        </div>
+      </ToastProvider>
+    </ThemeProvider>
   );
 }
 
